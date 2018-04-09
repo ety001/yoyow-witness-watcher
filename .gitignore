@@ -1,0 +1,5 @@
+/src/.env
+/src/vendor/
+.DS_Store
+/data/*
+!/data/.gitkeep
