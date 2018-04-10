@@ -15,9 +15,14 @@ echo ""
 echo "Please input wallet password:"
 read PASSWORD
 
+echo ""
+echo ""
+echo "Please input Discord webhook for notify (If you don't need it, leave empty.):"
+read WEBHOOK
+
 cd src/ && docker build -t yoyow_witness_watcher .
 
-docker run --name yoyow_witness_watcher -dit --net yoyow --restart always -e YOYOID=${YOYOID} -e PUBKEYS=${PUBKEYS} -e PASS=${PASSWORD} yoyow_witness_watcher
+docker run --name yoyow_witness_watcher -dit --net yoyow --restart always -e YOYOID=${YOYOID} -e PUBKEYS=${PUBKEYS} -e PASS=${PASSWORD} -e WEBHOOK=${WEBHOOK} yoyow_witness_watcher
 
 echo ""
 echo "Get status"

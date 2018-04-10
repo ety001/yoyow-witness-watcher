@@ -10,9 +10,11 @@ if ($testSwitch) {
 }
 $g = [];
 init();
+notify('switch bot is online!');
 
 while(1) {
     entry();
+    echo "\n\n";
     sleep(10);
 }
 
@@ -22,6 +24,7 @@ function init() {
     $g = [
         'uid' => getenv('YOYOID'),
         'url' => getenv('APIURL') ? getenv('APIURL') : 'http://172.20.99.2:9999/rpc',
+        'webhook' => getenv('WEBHOOK'),
         'total_missed' => 0,
         'pub_keys' => explode(',', getenv('PUBKEYS')),
         'pass' => getenv('PASS'),
@@ -209,7 +212,22 @@ function lock() {
 }
 
 function notify($msg) {
-    // todo
+    global $g;
+    if ($g['webhook']) {
+        try {
+            $client = new Client();
+            $r = $client->request('POST', $g['webhook'], [
+                'form_params' => [
+                    'content' => $msg,
+                ],
+            ]);
+            $body = $r->getBody();
+            $result = $body->getContents();
+            echo 'send_notify:'.json_encode($result)."\n";
+        } catch (Exception $e) {
+            echo 'notify_error:'.$e->getMessage()."\n";
+        }
+    }
     return;
 }
 function testdata($missed=3) {
