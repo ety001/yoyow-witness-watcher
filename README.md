@@ -15,7 +15,7 @@ git clone https://github.com/ety001/yoyow-witness-watcher.git
 cd yoyow-witness-watcher
 ```
 
-2. Deploy yoyow_client by `init.sh`. You need input yoyow_client download URL.
+2. Deploy yoyow_client by `init.sh`. You need input the **latest** yoyow_client download URL.
 
 ```
 root@vmi161488:/yoyow/yoyow-witness-watcher# ./init.sh 
