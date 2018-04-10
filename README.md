@@ -130,13 +130,12 @@ Finish!!
 # How to uninstall
 
 ```
-./uninstall_bot.sh
-./uninstall.sh
+./uninstall_bot.sh && ./uninstall.sh
 ```
 
 # Vote ME
 
-I am very grateful that you can vote for me. My YOYOW ID is 485699321.
+I am very grateful that you can vote for me. My YOYOW ID is **485699321**.
 
 # Bugs
 
