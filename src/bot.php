@@ -28,6 +28,7 @@ function init() {
         'total_missed' => 0,
         'pub_keys' => explode(',', getenv('PUBKEYS')),
         'pass' => getenv('PASS'),
+        'limit' => getenv('LOST_BLOCK_LIMIT') ? getenv('LOST_BLOCK_LIMIT') : 1,
     ];
     if (!$g['uid']) {
         echo "Need YOYOID\n";
@@ -66,7 +67,7 @@ function entry() {
         echo "$time\n";
         if (isset($witness['total_missed'])) {
             $total_missed = $witness['total_missed'];
-            if ($total_missed > $g['total_missed']) {
+            if ($total_missed - $g['total_missed'] >= $g['limit']) {
                 // switch node
                 echo 'start switch node'."\n";
                 $next_index = $g['current_pubkey_index'] + 1;
