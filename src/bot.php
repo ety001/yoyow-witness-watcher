@@ -28,7 +28,7 @@ function init() {
         'total_missed' => 0,
         'pub_keys' => explode(',', getenv('PUBKEYS')),
         'pass' => getenv('PASS'),
-        'limit' => getenv('LOST_BLOCK_LIMIT') ? getenv('LOST_BLOCK_LIMIT') : 1,
+        'limit' => getenv('LOST_BLOCK_LIMIT') ? getenv('LOST_BLOCK_LIMIT') : 10,
     ];
     if (!$g['uid']) {
         echo "Need YOYOID\n";
