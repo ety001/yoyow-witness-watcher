@@ -70,7 +70,8 @@ function entry() {
             if ($total_missed - $g['total_missed'] > 0) {
                 // send notification
                 $msg = ':skull: Miss a block, last_total_missed: '.$g['total_missed'].', current_total_missed: '.$total_missed;
-                echo $msg . "!!!!\n";
+                $msg .= "\ncurrent_signing_key: ".$witness['signing_key'];
+                echo $msg . " !!!!\n";
                 notify($msg);
             }
             if ($total_missed - $g['total_missed'] >= $g['limit']) {
