@@ -140,6 +140,7 @@ function collect_witness_payout() {
                 ];
                 $r = get_data($data, $g['url']);
                 lock();
+                $g['last_payout_timestamp'] = $curt_time;
                 var_dump('collect_result: ', $r);
                 notify(json_encode($r));
             } catch(Exception $e) {
