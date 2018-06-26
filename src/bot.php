@@ -15,6 +15,7 @@ notify('switch bot is online!');
 while(1) {
     entry();
     echo "\n\n";
+    collect_witness_payout();
     sleep(10);
 }
 
@@ -29,6 +30,8 @@ function init() {
         'pub_keys' => explode(',', getenv('PUBKEYS')),
         'pass' => getenv('PASS'),
         'limit' => getenv('LOST_BLOCK_LIMIT') ? getenv('LOST_BLOCK_LIMIT') : 10,
+        'auto_collect_witness_payout' => getenv('AUTO_COLLECT_PAYOUT') ? getenv('AUTO_COLLECT_PAYOUT') : false,
+        'last_payout_timestamp' => time(),
     ];
     if (!$g['uid']) {
         echo "Need YOYOID\n";
@@ -116,6 +119,37 @@ function entry() {
     }
 }
 
+function collect_witness_payout() {
+    global $g; 
+    if ($g['auto_collect_witness_payout']) {
+        $curt_time = time();
+        if ($curt_time - $g['last_payout_timestamp'] > 24 * 60 * 60) {
+            try {
+                $money = get_collect_money($g['uid']);
+                unlock();
+                $data = [
+                    'jsonrpc' => '2.0',
+                    'method' => 'collect_witness_pay',
+                    'params' => [
+                        $g['uid'],
+                        $money,
+                        'YOYO',
+                        true,
+                    ],
+                    'id' => 1
+                ];
+                $r = get_data($data, $g['url']);
+                lock();
+                var_dump('collect_result: ', $r);
+                notify(json_encode($r));
+            } catch(Exception $e) {
+                var_dump($e->getMessage());
+                lock();
+            }
+        }
+    }
+}
+
 function get_data($data, $url = 'http://172.20.99.2:9999/rpc') {
     global $g;
     try {
@@ -144,6 +178,12 @@ function get_full_account($uid) {
         'id' => 1
     ];
     return get_data($data, $g['url']);
+}
+
+function get_collect_money($uid) {
+    $r = get_full_account($uid);
+    $money = isset($r['result']['statistics']['uncollected_witness_pay']) ? $r['result']['statistics']['uncollected_witness_pay'] : 0;
+    return $money / 100000;
 }
 
 function get_witness($uid) {
