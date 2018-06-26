@@ -67,6 +67,12 @@ function entry() {
         echo "$time\n";
         if (isset($witness['total_missed'])) {
             $total_missed = $witness['total_missed'];
+            if ($total_missed - $g['total_missed'] > 0) {
+                // send notification
+                $msg = ':skull: Miss a block, last_total_missed: '.$g['total_missed'].', current_total_missed: '.$total_missed;
+                echo $msg . "!!!!\n";
+                notify($msg);
+            }
             if ($total_missed - $g['total_missed'] >= $g['limit']) {
                 // switch node
                 echo 'start switch node'."\n";
