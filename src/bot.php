@@ -188,7 +188,7 @@ function get_full_account($uid) {
 function get_collect_money($uid) {
     $r = get_full_account($uid);
     $money = isset($r['result']['statistics']['uncollected_witness_pay']) ? $r['result']['statistics']['uncollected_witness_pay'] : 0;
-    return $money / 100000;
+    return number_format($money / 100000, 2);
 }
 
 function get_witness($uid) {
