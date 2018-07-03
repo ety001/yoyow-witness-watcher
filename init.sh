@@ -16,6 +16,13 @@ echo ""
 echo "Please input current yoyow_client download URL (https://github.com/yoyow-org/yoyow-core/releases/latest):"
 read DownloadURL
 
+echo "Please input API url (Default: wss://wallet.yoyow.org/ws)"
+read ApiURL
+
+if  [ ! -n "$ApiURL" ] ;then
+    ApiURL="wss://wallet.yoyow.org/ws"
+fi
+
 echo "Begin to download yoyow_client"
 wget -O "${DATA_PATH}${YOYO_FILE_TGZ}" ${DownloadURL}
 
@@ -55,7 +62,7 @@ docker run -it --rm -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99
 echo ""
 echo "Run container"
 
-docker run -dit --name yoyow_client --restart always -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
+docker run -dit --name yoyow_client --restart always -e "WSAPI=${ApiURL}" -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
 
 echo ""
 echo "Get Status"
