@@ -55,7 +55,7 @@ docker run -it --rm -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99
 echo ""
 echo "Run container"
 
-docker run -dit --name yoyow_client -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
+docker run -dit --name yoyow_client --restart always -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
 
 echo ""
 echo "Get Status"
