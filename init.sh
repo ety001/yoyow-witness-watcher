@@ -57,7 +57,7 @@ docker network create -d bridge --subnet=172.20.99.0/24 --gateway=172.20.99.1 yo
 echo ""
 echo "Create wallet"
 
-docker run -it --rm -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
+docker run -it --rm -e "WSAPI=${ApiURL}" -v ${BASE_PATH}${DATA_PATH}:/data --net yoyow --ip 172.20.99.2 yoyow_client
 
 echo ""
 echo "Run container"
