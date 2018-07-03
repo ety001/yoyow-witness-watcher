@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 BASE_PATH=`pwd`"/"
 DATA_PATH="./data/"
