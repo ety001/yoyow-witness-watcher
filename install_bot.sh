@@ -22,12 +22,24 @@ read LOST_BLOCK_LIMIT
 
 echo ""
 echo ""
+echo "Please input whether to open auto-collect-witness-pay (Input yes or no, Default: yes):"
+read AUTO_COLLECT
+
+typeset -l AUTO_COLLECT_TMP=${AUTO_COLLECT}
+if [ ${AUTO_COLLECT_TMP} == "yes" ]; then
+    AUTO_COLLECT=1
+else
+    AUTO_COLLECT=0
+fi
+
+echo ""
+echo ""
 echo "Please input Discord webhook for notify (If you don't need it, leave empty.):"
 read WEBHOOK
 
 cd src/ && docker build -t yoyow_witness_watcher .
 
-docker run --name yoyow_witness_watcher -dit --net yoyow --restart always -e YOYOID=${YOYOID} -e PUBKEYS=${PUBKEYS} -e PASS=${PASSWORD} -e WEBHOOK=${WEBHOOK} -e LOST_BLOCK_LIMIT=${LOST_BLOCK_LIMIT} yoyow_witness_watcher
+docker run --name yoyow_witness_watcher -dit --net yoyow --restart always -e YOYOID=${YOYOID} -e PUBKEYS=${PUBKEYS} -e PASS=${PASSWORD} -e WEBHOOK=${WEBHOOK} -e LOST_BLOCK_LIMIT=${LOST_BLOCK_LIMIT} -e AUTO_COLLECT_PAYOUT=${AUTO_COLLECT} yoyow_witness_watcher
 
 echo ""
 echo "Get status"
