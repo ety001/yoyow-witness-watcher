@@ -22,7 +22,7 @@ read LOST_BLOCK_LIMIT
 
 echo ""
 echo ""
-echo "Please input whether to open auto-collect-witness-pay (Input yes or no, Default: yes):"
+echo "Please input whether to open auto-collect-witness-pay (Input yes or no, Default: no):"
 read AUTO_COLLECT
 
 typeset -l AUTO_COLLECT_TMP=${AUTO_COLLECT}
